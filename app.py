@@ -12,7 +12,7 @@ def index():
 @socketio.on('message')
 def handle_message(msg):
     print(f'Received message: {msg}')
-    send('Hello, world!')
+    send('こんにちは！')
 
 if __name__ == "__main__":
     socketio.run(app, host="0.0.0.0", port=5000)
