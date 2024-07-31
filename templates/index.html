@@ -8,18 +8,24 @@
     <script type="text/javascript" charset="utf-8">
         document.addEventListener("DOMContentLoaded", () => {
             var socket = io();
+
             socket.on('connect', () => {
                 console.log('Connected to server');
-                socket.send('Hello from client');
+                // サーバーに字幕データの要求を送信
+                socket.emit('get_subtitles');
             });
 
-            socket.on('message', (msg) => {
-                document.getElementById('message').innerText = msg;
+            socket.on('subtitle', (data) => {
+                console.log('Received subtitle data:', data);
+                // 受け取ったデータを表示
+                document.getElementById('message').innerText = data.text;
+                document.getElementById('message').style.color = data.color;
+                document.getElementById('message').style.fontFamily = data.font;
             });
         });
     </script>
 </head>
 <body>
-    <h1 id="message">Waiting for message...</h1>
+    <h1 id="message">Waiting for subtitle...</h1>
 </body>
 </html>
