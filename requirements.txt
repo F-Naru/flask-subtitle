@@ -1,3 +1,5 @@
 Flask
 Flask-SocketIO
 eventlet
+mecab-python3
+unidic-lite
