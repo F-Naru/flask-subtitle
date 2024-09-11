@@ -16,10 +16,11 @@ def handle_get_subtitles():
 
 
     while True:
-        # 1秒ごとに字幕データを送信
+        # 直近3つの字幕データを取得
         with open('subtitles.json', 'r') as f:
-            subtitle_data = json.load(f)        
+            json_data = json.load(f)
         socketio.sleep(1)
+        subtitle_data = json_data["subtitles"][-3:]
         emit('subtitle', subtitle_data)
 
 if __name__ == "__main__":
