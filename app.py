@@ -5,7 +5,7 @@ import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-socketio = SocketIO(app, async_mode='eventlet')
+socketio = SocketIO(app)
 
 @app.route('/')
 def index():
