@@ -5,6 +5,50 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flask SocketIO</title>
     <style>
+        @font-face {
+            font-family: 'DelaGothicOne-Regular';
+            src: url('/ttf/DelaGothicOne-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'HGRSMP';
+            src: url('/ttf/HGRSMP.ttf');
+        }
+        @font-face {
+            font-family: 'KosugiMaru-Regular';
+            src: url('/ttf/KosugiMaru-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'MochiyPopOne-Regular';
+            src: url('/ttf/MochiyPopOne-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'PottaOne-Regular';
+            src: url('/ttf/PottaOne-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'ReggaeOne-Regular';
+            src: url('/ttf/ReggaeOne-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'SawarabiGothic-Regular';
+            src: url('/ttf/SawarabiGothic-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'YuseiMagic-Regular';
+            src: url('/ttf/YuseiMagic-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'ZenAntiqueSoft-Regular';
+            src: url('/ttf/ZenAntiqueSoft-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'ZenKurenaido-Regular';
+            src: url('/ttf/ZenKurenaido-Regular.ttf');
+        }
+        @font-face {
+            font-family: 'ZenOldMincho-Regular';
+            src: url('/ttf/ZenOldMincho-Regular.ttf');
+        }
         .main {
             text-align: center;
             position: absolute;
@@ -26,13 +70,14 @@
 
             socket.on('subtitle', (data) => {
                 console.log('Received subtitle data:', data);
-                const latestSubtitle = data.slice(-1)[0];                
+                const latestSubtitle = data.slice(-1)[0];
                 // 受け取ったデータを表示
                 document.getElementById('message').innerText = latestSubtitle.text;
                 document.getElementById('message').style.color = latestSubtitle.color;
                 document.getElementById('message').style.fontFamily = latestSubtitle.font;
                 document.getElementById('message').style.fontSize = latestSubtitle.size;
                 document.getElementById('eng-message').innerText = latestSubtitle.eng;
+                document.getElementById('eng-message').style.fontFamily = latestSubtitle.font;
             });
         });
     </script>

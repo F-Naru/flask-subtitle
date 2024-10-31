@@ -52,8 +52,8 @@
             "text": "さようなら！",
             "eng": "Goodbye!",
             "speaker": "Speaker Name",
-            "color": "#000000",
-            "font": "Arial"
+            "color": "#ff00ff",
+            "font": "ZenOldMincho-Regular"
         }
     ]
 }
