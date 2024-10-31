@@ -17,7 +17,7 @@ def handle_get_subtitles():
 
     while True:
         # 直近3つの字幕データを取得
-        with open('subtitles.json', 'r') as f:
+        with open('subtitles.json', 'r', encoding="utf-8") as f:
             json_data = json.load(f)
         socketio.sleep(1)
         subtitle_data = json_data["subtitles"][-3:]
