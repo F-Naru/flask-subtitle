@@ -26,12 +26,13 @@
 
             socket.on('subtitle', (data) => {
                 console.log('Received subtitle data:', data);
+                const latestSubtitle = data.slice(-1)[0];                
                 // 受け取ったデータを表示
-                document.getElementById('message').innerText = data.slice(-1)[0].text;
-                document.getElementById('message').style.color = data.slice(-1)[0].color;
-                document.getElementById('message').style.fontFamily = data.slice(-1)[0].font;
-                document.getElementById('message').style.fontSize = data.slice(-1)[0].size;
-                document.getElementById('eng-message').innerText = data.slice(-1)[0].eng;
+                document.getElementById('message').innerText = latestSubtitle.text;
+                document.getElementById('message').style.color = latestSubtitle.color;
+                document.getElementById('message').style.fontFamily = latestSubtitle.font;
+                document.getElementById('message').style.fontSize = latestSubtitle.size;
+                document.getElementById('eng-message').innerText = latestSubtitle.eng;
             });
         });
     </script>
