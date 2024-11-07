@@ -1,18 +1,46 @@
-from flask import Flask, render_template
-from flask_socketio import SocketIO, send
+from flask import Flask, render_template, jsonify, send_from_directory
+from flask_socketio import SocketIO, emit
+import json
+import os
+from multiprocessing import Queue
 
-app = Flask(__name__)
-app.config['SECRET_KEY'] = 'secret!'
-socketio = SocketIO(app, async_mode='eventlet')
+class SubtitleApp:
+    def __init__(self, queue):
+        self.queue = queue
+        self.app = Flask(__name__)
+        self.app.config['SECRET_KEY'] = 'secret!'
+        # self.app.config['DEBUG'] = False
+        self.socketio = SocketIO(self.app)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
+        # ルートの設定
+        self.app.add_url_rule('/', 'index', self.index)
+        self.app.add_url_rule('/ttf/<path:filename>', 'serve_ttf', self.serve_ttf)
 
-@socketio.on('message')
-def handle_message(msg):
-    print(f'Received message: {msg}')
-    send('こんにちは！')
+        # ソケットイベントの設定
+        self.socketio.on_event('get_subtitles', self.handle_get_subtitles)
 
+    def index(self):
+        return render_template('index.html')
+
+    def serve_ttf(self, filename):
+        return send_from_directory(os.path.join(self.app.root_path, 'ttf'), filename)
+
+    def handle_get_subtitles(self):
+        data = []
+        while True:
+            self.socketio.sleep(0.1)
+            if not self.queue.empty():
+                json_data = self.queue.get()
+                data.append(json_data)
+                if len(data) > 3:
+                    data.pop(0)
+                emit('subtitle', data)
+
+    def run(self, host="0.0.0.0", port=5000):
+        self.socketio.run(self.app, host=host, port=port)
+
+# アプリの実行
 if __name__ == "__main__":
-    socketio.run(app, host="0.0.0.0", port=5000)
+    queue = Queue()
+    app = SubtitleApp(queue)
+    app.run()
